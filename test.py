@@ -1,3 +1,5 @@
+import time
+
 import pytest
 from pages.main_page import MainPage
 from pages.project_page import ProjectPage
@@ -145,6 +147,7 @@ class TestProjectPage:
         page.open()
         page.login()
         page.download_photo_in_album_hover()
+
 
     @pytest.mark.delete_photo
     def test_delete_one_photo(self, browser):

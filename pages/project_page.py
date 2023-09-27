@@ -184,6 +184,7 @@ class ProjectPage(BasePage):
         actions = ActionChains(self.browser)
         hover_album = (self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM_HOVER))
         actions.move_to_element(hover_album).perform()
+        time.sleep(1)
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM_DELETE_BUTTON).click()
         self.browser.refresh()
         try:
@@ -322,11 +323,15 @@ class ProjectPage(BasePage):
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
+        time.sleep(2)
         self.browser.find_element(*ProjectPageLocators.PHOTO_POSITION_EDIT).click()
         source = self.browser.find_element(*ProjectPageLocators.POSITION_PHOTO_PREV)
+        print(source)
         target = self.browser.find_element(*ProjectPageLocators.POSITION_PHOTO_NEXT)
+        print(target)
         actions = ActionChains(self.browser)
         actions.drag_and_drop(source, target).perform()
         self.browser.find_element(*ProjectPageLocators.SAVE_POSITION_BUTTON).click()
         new_position = self.browser.find_element(*ProjectPageLocators.POSITION_PHOTO_NEXT)
+        print(new_position)
         assert target != new_position, 'Photo position is not changed'

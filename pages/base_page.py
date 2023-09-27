@@ -62,3 +62,9 @@ class BasePage:
         search_input.send_keys('пмэф')
         search_input.send_keys(Keys.ENTER)
         assert self.browser.find_element(*BasePageLocators.RESULT_IMAGE), 'No results by text search'
+
+    def go_to_projects_page_from_footer(self):
+        pass
+
+    def go_to_photo_of_the_day_from_footer(self):
+        pass
