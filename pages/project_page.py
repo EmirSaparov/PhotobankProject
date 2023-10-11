@@ -318,7 +318,6 @@ class ProjectPage(BasePage):
             assert True, 'Album is not shown'
 
     """Not working"""
-
     def reposition_photos(self):
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
