@@ -79,7 +79,6 @@ class MainPage(BasePage):
             EC.visibility_of_element_located(ProjectPageLocators.PROJECTS_PAGE_TITLE)
         ), 'Projects page is not loaded'
 
-
     def potd_slider_can_go_forward_back(self):
         initial_picture = self.browser.find_element(*MainPageLocators.POTD_CURRENT_PICTURE)
         initial_picture_attr = initial_picture.get_attribute('src')
