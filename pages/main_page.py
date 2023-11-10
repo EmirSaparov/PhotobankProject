@@ -1,4 +1,6 @@
 import time
+
+import pytest
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators.projects_page_locators import ProjectPageLocators
@@ -6,7 +8,7 @@ from .base_page import BasePage
 from locators.main_page_locators import MainPageLocators
 import os
 from selenium.common.exceptions import NoSuchElementException
-from data.data import CreateProjectData, CreateChildProjectData, EditProjectData
+from data.data import CreateProjectData, CreateChildProjectData, EditProjectData, BuildData
 
 
 class MainPage(BasePage):
@@ -150,17 +152,23 @@ class MainPage(BasePage):
         multiselector_input.send_keys('ТПА')
         self.browser.find_element(*MainPageLocators.PROJECT_PARENTAL_MULTISELECTOR_CHOOSE).click()
         time.sleep(2)
-        """Когда Макс исправит выбор элементов в селекторе надо убрать нижние 2 строки"""
-        self.browser.find_element(*MainPageLocators.PARENT_PROJECT_CHECKBOX).click()
-        self.browser.find_element(*MainPageLocators.PARENT_PROJECT_CHECKBOX).click()
+        self.browser.find_element(*MainPageLocators.CLOSE_MULTISELECTOR_BUTTON).click()
 
         self.browser.find_element(*MainPageLocators.PROJECT_CREATE_BUTTON).click()
         time.sleep(2)
         created_project = self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT)
         assert created_project.is_displayed(), 'Project is not created'
 
-    """Пока не работает полностью !!!"""
     def edit_project(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
@@ -186,3 +194,119 @@ class MainPage(BasePage):
         time.sleep(5)
         edited_project = self.browser.find_element(*MainPageLocators.EDITED_SPECIFIC_SUBPROJECT)
         assert edited_project.is_displayed(), 'Project is not edited'
+
+    def appoint_build_on_project_by_superadmin(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
+        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
+        self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
+        self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
+        modal_element = self.browser.find_element(*MainPageLocators.PROJECT_ADD_MODAL)
+        self.browser.execute_script("window.scrollBy(0, 800);", modal_element)
+        multiselector_input = self.browser.find_element(*MainPageLocators.BUILD_MULTISELECT)
+        multiselector_input.send_keys(BuildData.email)
+        self.browser.find_element(*MainPageLocators.BUILD_MULTISELECT_CHOOSE).click()
+        self.browser.find_element(*MainPageLocators.CLOSE_MULTISELECTOR_BUTTON).click()
+        self.browser.find_element(*MainPageLocators.PROJECT_CREATE_BUTTON).click()
+        self.browser.refresh()
+        self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
+        build_user_active = self.browser.find_element(*MainPageLocators.BUILD_MULTISELECT_ACTIVE)
+        assert build_user_active.is_displayed(), 'build is not appointed'
+
+    def remove_build_from_project_by_superadmin(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
+        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
+        self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
+        self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
+        modal_element = self.browser.find_element(*MainPageLocators.PROJECT_ADD_MODAL)
+        self.browser.execute_script("window.scrollBy(0, 800);", modal_element)
+        self.browser.find_element(*MainPageLocators.BUILD_MULTISELECT_CLEAR).click()
+        self.browser.find_element(*MainPageLocators.CLOSE_MULTISELECTOR_BUTTON).click()
+        self.browser.find_element(*MainPageLocators.PROJECT_CREATE_BUTTON).click()
+        self.browser.refresh()
+        self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
+        build_user_active = self.browser.find_element(*MainPageLocators.BUILD_MULTISELECT)
+        assert build_user_active.is_displayed(), 'build is not removed'
+
+    def build_have_charges_on_project_as_build(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
+        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
+        self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
+        edit_button = self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON)
+        assert edit_button.is_displayed(), 'Build cant edit project attached to him'
+
+    def build_dont_have_charges_on_project_after_remove_as_build(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
+        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
+        self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
+        try:
+            edit_button = self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON)
+            assert not edit_button.is_displayed(), 'Build can still edit project after removal'
+        except NoSuchElementException:
+            assert True, 'Build can still edit project after removal'
+
+    def build_can_edit_project(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
+        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
+        self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
+        self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
+        time.sleep(2)
+        self.browser.find_element(*MainPageLocators.FULL_NAME_RU_INPUT).click()
+        self.browser.find_element(*MainPageLocators.FULL_NAME_RU_INPUT).clear()
+        self.browser.find_element(*MainPageLocators.FULL_NAME_RU_INPUT).send_keys(CreateChildProjectData.full_name_ru)
+        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).click()
+        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).clear()
+        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).send_keys(CreateChildProjectData.full_name_en)
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).click()
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).clear()
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).send_keys(CreateChildProjectData.short_name_ru)
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).click()
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).clear()
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).send_keys(CreateChildProjectData.short_name_en)
+        time.sleep(2)
+        modal_element = self.browser.find_element(*MainPageLocators.PROJECT_ADD_MODAL)
+        self.browser.execute_script("window.scrollBy(0, 800);", modal_element)
+        self.browser.find_element(*MainPageLocators.PROJECT_CREATE_BUTTON).click()
+        self.browser.refresh()
+        created_project = self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT)
+        assert created_project.is_displayed(), 'Project is not created'
+

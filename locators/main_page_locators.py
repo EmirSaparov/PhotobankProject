@@ -50,5 +50,9 @@ class MainPageLocators:
     EDITED_SPECIFIC_SUBPROJECT = (By.XPATH, f'//div[text()="{EditProjectData.full_name_ru_edit}"]')
     PROJECT_PARENTAL_MULTISELECTOR = (By.CLASS_NAME, 'multiselect-search')
     PROJECT_PARENTAL_MULTISELECTOR_CHOOSE = (By.CSS_SELECTOR, '.multiselect-option.is-pointed')
-    CLOSE_MULTISELECTOR_BUTTON = (By.CLASS_NAME, '.multiselect-caret.is-open')
+    CLOSE_MULTISELECTOR_BUTTON = (By.CSS_SELECTOR, '.multiselect-caret.is-open')
+    BUILD_MULTISELECT = (By.XPATH, '//input[@aria-placeholder="Выберите пользователей"]')
+    BUILD_MULTISELECT_CHOOSE = (By.XPATH, '//li[@aria-label="Сапаров Э. Р.(emir-saparo@rambler.ru)"]')
+    BUILD_MULTISELECT_ACTIVE = (By.XPATH, '//div[@aria-label="Сапаров Э. Р.(emir-saparo@rambler.ru)"]')
+    BUILD_MULTISELECT_CLEAR = (By.CLASS_NAME, 'multiselect-clear')
 

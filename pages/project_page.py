@@ -12,6 +12,15 @@ import time
 
 class ProjectPage(BasePage):
     def create_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         try:
@@ -38,6 +47,15 @@ class ProjectPage(BasePage):
         assert created_album.is_displayed(), 'Album is not created'
 
     def create_album_out_of_date(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         try:
@@ -65,6 +83,15 @@ class ProjectPage(BasePage):
         assert created_album.is_displayed(), 'Album is not created'
 
     def create_album_no_filter(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         try:
@@ -90,6 +117,15 @@ class ProjectPage(BasePage):
         assert created_album.is_displayed(), 'Album is not created'
 
     def add_photo_in_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -103,6 +139,15 @@ class ProjectPage(BasePage):
         assert len(uploaded_photo_list) == 1, 'Photo is not added in album'
 
     def download_photo_in_album_hover(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -115,6 +160,15 @@ class ProjectPage(BasePage):
         assert os.path.exists(download_file_path), 'Photo is not downloaded'
 
     def delete_photo_in_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -131,6 +185,15 @@ class ProjectPage(BasePage):
             assert True, 'Photo is not deleted'
 
     def add_several_photo_in_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -147,6 +210,15 @@ class ProjectPage(BasePage):
         assert len(uploaded_photo_list) == 1, 'Photos are not added in album'
 
     def download_all_photo_in_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -157,6 +229,15 @@ class ProjectPage(BasePage):
         assert os.path.exists(download_file_path), 'Album is not downloaded'
 
     def delete_several_photo_in_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -179,6 +260,15 @@ class ProjectPage(BasePage):
             assert True, 'Photos are not deleted'
 
     def album_delete(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         actions = ActionChains(self.browser)
@@ -186,6 +276,7 @@ class ProjectPage(BasePage):
         actions.move_to_element(hover_album).perform()
         time.sleep(1)
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM_DELETE_BUTTON).click()
+        self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM_DELETE_CONFIRMATION).click()
         self.browser.refresh()
         try:
             album = self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM)
@@ -194,6 +285,15 @@ class ProjectPage(BasePage):
             assert True, 'Album is not deleted'
 
     def album_filter_by_rubric(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_RUBRIC_FILTER).click()
@@ -203,19 +303,16 @@ class ProjectPage(BasePage):
         except NoSuchElementException:
             assert True, 'Album are not filtered'
 
-    def display_type_by_photos_and_albums(self):
-        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
-        self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
-        self.browser.find_element(*ProjectPageLocators.DISPLAY_TYPE).click()
-        self.browser.find_element(*ProjectPageLocators.DISPLAY_TYPE_PHOTOS).click()
-        photos = self.browser.find_element(*ProjectPageLocators.PHOTO_ITEM)
-        assert photos.is_displayed(), 'Display type is not changed'
-        self.browser.find_element(*ProjectPageLocators.DISPLAY_TYPE).click()
-        self.browser.find_element(*ProjectPageLocators.DISPLAY_TYPE_ALBUMS).click()
-        albums = self.browser.find_element(*ProjectPageLocators.ALBUM_ITEM)
-        assert albums.is_displayed(), 'Display type is not changed'
-
     def hide_photos_in_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -227,6 +324,15 @@ class ProjectPage(BasePage):
         assert hidden_image.is_displayed(), 'Photo is not hidden'
 
     def show_photos_in_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -238,6 +344,15 @@ class ProjectPage(BasePage):
         assert hidden_image.is_displayed(), 'Photo is not revealed'
 
     def hide_multiple_photos_in_albums(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -256,6 +371,15 @@ class ProjectPage(BasePage):
         assert len(hidden_photos) == 3, 'Photos are not hidden'
 
     def show_multiple_photos_in_albums(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -274,6 +398,15 @@ class ProjectPage(BasePage):
         assert len(hidden_photos) == 3, 'Photos are not revealed'
 
     def edit_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -298,6 +431,15 @@ class ProjectPage(BasePage):
         assert edited_album.is_displayed(), 'Album is not edited'
 
     def hide_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -306,6 +448,15 @@ class ProjectPage(BasePage):
         assert visibility_status.is_displayed(), 'Album is not hidden'
 
     def show_album(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -319,6 +470,15 @@ class ProjectPage(BasePage):
 
     """Not working"""
     def reposition_photos(self):
+        last_height = self.browser.execute_script("return document.body.scrollHeight")
+        while True:
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = self.browser.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
@@ -334,3 +494,5 @@ class ProjectPage(BasePage):
         new_position = self.browser.find_element(*ProjectPageLocators.POSITION_PHOTO_NEXT)
         print(new_position)
         assert target != new_position, 'Photo position is not changed'
+
+

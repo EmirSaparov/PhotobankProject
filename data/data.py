@@ -1,7 +1,13 @@
 
 class LoginData:
     email = 'm.sergeev@magnatmedia.com'
-    password = 'Rhinobang2014'
+    password = 'GL1kGIm29a'
+
+
+class BuildData:
+    email = 'emir-saparo@rambler.ru'
+    password = 'CpifW3HC89'
+    build_full_name = 'Сапаров Эмир Рамблер'
 
 
 class CreateProjectData:

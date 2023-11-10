@@ -32,6 +32,7 @@ class ProjectPageLocators:
     SPECIFIC_ALBUM_NO_FILTER = (By.XPATH, f'//div[contains(text(),"{CreateAlbumData.album_name_ru_no_filter}")]')
     SPECIFIC_ALBUM_OUT_OF_DATE = (By.XPATH, f'//div[contains(text(),"{CreateAlbumData.album_name_ru_out_of_date}")]')
     SPECIFIC_ALBUM_DELETE_BUTTON = (By.CSS_SELECTOR, 'div:nth-child(1) > div > div > div.events-item__delete')
+    SPECIFIC_ALBUM_DELETE_CONFIRMATION = (By.CLASS_NAME, 'confirm-actions__true')
     SPECIFIC_ALBUM_HOVER = (By.CSS_SELECTOR, 'div.events > div:nth-child(1) > div')
     DISPLAY_TYPE = (By.CLASS_NAME, 'type-selected')
     DISPLAY_TYPE_ALBUMS = (By.CSS_SELECTOR, '.type-select > div:nth-child(1)')

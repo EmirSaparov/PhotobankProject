@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  test_runner:
+    build: .
+    image: automation-tests
+    container_name: pytest_runner_works
+    environment:
+      - ENV=dev
