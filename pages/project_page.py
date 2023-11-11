@@ -8,6 +8,7 @@ from locators.main_page_locators import MainPageLocators
 from locators.projects_page_locators import ProjectPageLocators
 from pages.base_page import BasePage
 import time
+import urllib.request
 
 
 class ProjectPage(BasePage):
@@ -28,6 +29,7 @@ class ProjectPage(BasePage):
         except NoSuchElementException:
             self.browser.find_element(*ProjectPageLocators.ADD_ALBUM_BUTTON_NO_ALBUMS).click()
         time.sleep(2)
+        self.browser.find_element(*ProjectPageLocators.ALBUM_OUT_OF_DATE_CHECKBOX).click()
         self.browser.find_element(*ProjectPageLocators.ALBUM_DATE_TIME_PICKER).click()
         time.sleep(2)
         self.browser.find_element(*ProjectPageLocators.DATE_SELECT).click()
@@ -152,12 +154,14 @@ class ProjectPage(BasePage):
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
         actions = ActionChains(self.browser)
-        image = self.browser.find_element(*ProjectPageLocators.PHOTO_PREVIEW)
+        image = self.browser.find_element(*ProjectPageLocators.DOWNLOAD_IMAGE)
         actions.move_to_element(image).perform()
+        image_url = image.get_attribute('src')
+        save_path = os.path.join(os.getcwd(), 'downloads', 'download_photo.jpg')
+        urllib.request.urlretrieve(url=image_url, filename=save_path)
         self.browser.find_element(*ProjectPageLocators.DOWNLOAD_PHOTO_HOVER_BUTTON).click()
         time.sleep(3)
-        download_file_path = f'C:/Users/jeezou/Downloads/album_photo0.jpg'
-        assert os.path.exists(download_file_path), 'Photo is not downloaded'
+        assert os.path.exists(save_path), 'Photo is not downloaded'
 
     def delete_photo_in_album(self):
         last_height = self.browser.execute_script("return document.body.scrollHeight")
@@ -222,11 +226,12 @@ class ProjectPage(BasePage):
         self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
-        self.browser.find_element(*ProjectPageLocators.DOWNLOAD_ALL_PHOTO_BUTTON).click()
+        images_zip = self.browser.find_element(*ProjectPageLocators.DOWNLOAD_ALL_PHOTO_BUTTON)
+        images_url = images_zip.get_attribute('href')
+        save_path = os.path.join(os.getcwd(), 'downloads', 'download_zip.zip')
+        urllib.request.urlretrieve(images_url, save_path)
         time.sleep(3)
-        download_file_path = f'C:/Users/jeezou/Downloads/{CreateAlbumData.album_name_ru}.zip'
-        print(download_file_path)
-        assert os.path.exists(download_file_path), 'Album is not downloaded'
+        assert os.path.exists(save_path), 'Album is not downloaded'
 
     def delete_several_photo_in_album(self):
         last_height = self.browser.execute_script("return document.body.scrollHeight")
