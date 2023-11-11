@@ -51,6 +51,7 @@ class ProjectPageLocators:
     """Download photo"""
     DOWNLOAD_PHOTO_HOVER_BUTTON = (By.CLASS_NAME, 'event-list__image--download')
     PHOTO_PREVIEW = (By.CLASS_NAME, 'event-list__image')
+    DOWNLOAD_IMAGE = (By.CSS_SELECTOR, 'div.event-list > div > img')
     HIDDEN_PHOTO_PREVIEW = (By.CLASS_NAME, 'event-list__image--hidden')
     DOWNLOAD_PHOTO_PREVIEW_BUTTON = (By.CLASS_NAME, 'primary')
     DOWNLOAD_ALL_PHOTO_BUTTON = (By.CSS_SELECTOR, 'div.event-head > div > div > a')

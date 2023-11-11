@@ -30,7 +30,7 @@ class TestSmoke:
     #     page.open()
     #     page.login()
     #     page.create_child_project()
-    @pytest.mark.new
+
     def test_create_album(self, browser):
         page = ProjectPage(browser=browser, url=self.url)
         page.open()
@@ -66,6 +66,7 @@ class TestSmoke:
         page.go_to_projects_page()
         page.add_several_photo_in_album()
 
+    @pytest.mark.new
     def test_download_all_photo(self, browser):
         page = ProjectPage(browser=browser, url=self.url)
         page.open()
