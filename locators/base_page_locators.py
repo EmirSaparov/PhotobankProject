@@ -5,6 +5,7 @@ class BasePageLocators:
     LOGIN_LINK = (By.CLASS_NAME, 'header-login')
     EMAIL_INPUT = (By.CSS_SELECTOR, '.email > input[type=text]')
     PASSWORD_INPUT = (By.CSS_SELECTOR, '.password > input[type=password]')
+    INVALID_LOGIN_ALERT = (By.CLASS_NAME, 'modal-alert')
     SUBMIT_BUTTON = (By.CLASS_NAME, 'loginBtn')
     PROFILE_BUTTON = (By.CLASS_NAME, 'header-profile')
     LOGOUT_BUTTON = (By.CLASS_NAME, 'mobileProfile-logout')
