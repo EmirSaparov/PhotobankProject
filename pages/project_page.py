@@ -160,7 +160,7 @@ class ProjectPage(BasePage):
         save_path = os.path.join(os.getcwd(), 'downloads', 'download_photo.jpg')
         urllib.request.urlretrieve(url=image_url, filename=save_path)
         self.browser.find_element(*ProjectPageLocators.DOWNLOAD_PHOTO_HOVER_BUTTON).click()
-        time.sleep(3)
+        time.sleep(1)
         assert os.path.exists(save_path), 'Photo is not downloaded'
 
     def delete_photo_in_album(self):
@@ -230,7 +230,7 @@ class ProjectPage(BasePage):
         images_url = images_zip.get_attribute('href')
         save_path = os.path.join(os.getcwd(), 'downloads', 'download_zip.zip')
         urllib.request.urlretrieve(images_url, save_path)
-        time.sleep(3)
+        time.sleep(1)
         assert os.path.exists(save_path), 'Album is not downloaded'
 
     def delete_several_photo_in_album(self):
@@ -499,5 +499,3 @@ class ProjectPage(BasePage):
         new_position = self.browser.find_element(*ProjectPageLocators.POSITION_PHOTO_NEXT)
         print(new_position)
         assert target != new_position, 'Photo position is not changed'
-
-

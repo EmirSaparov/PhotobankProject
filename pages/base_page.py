@@ -22,18 +22,70 @@ class BasePage:
     def login(self):
         self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
-        email_input.send_keys(*LoginData.email)
+        email_input.send_keys(LoginData.email)
         password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
-        password_input.send_keys(*LoginData.password)
+        password_input.send_keys(LoginData.password)
         self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
         assert self.browser.find_element(*BasePageLocators.PROFILE_BUTTON), 'Authentication data is not valid'
+
+    def login_invalid_email(self):
+        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
+        email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
+        email_input.send_keys('emir' + LoginData.email)
+        password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
+        password_input.send_keys(LoginData.password)
+        self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
+        alert_message = (WebDriverWait(self.browser, 10).
+                         until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT)))
+        alert_message_text = (WebDriverWait(self.browser, 10).
+                              until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT))).text
+        assert alert_message.is_displayed(), 'Fail authentication went wrong'
+        assert alert_message_text == 'Неверный логин или пароль', 'Authentication alert is incorrect'
+
+    def login_invalid_password(self):
+        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
+        email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
+        email_input.send_keys(LoginData.email)
+        password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
+        password_input.send_keys('11' + LoginData.password)
+        self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
+        alert_message = (WebDriverWait(self.browser, 10).
+                         until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT)))
+        alert_message_text = (WebDriverWait(self.browser, 10).
+                              until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT))).text
+        assert alert_message.is_displayed(), 'Fail authentication went wrong'
+        assert alert_message_text == 'Неверный логин или пароль', 'Authentication alert is incorrect'
+
+    def login_empty_email(self):
+        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
+        password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
+        password_input.send_keys(LoginData.password)
+        self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
+        alert_message = (WebDriverWait(self.browser, 10).
+                         until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT)))
+        alert_message_text = (WebDriverWait(self.browser, 10).
+                              until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT))).text
+        assert alert_message.is_displayed(), 'Fail authentication went wrong'
+        assert alert_message_text == 'Некорректный E-mail', 'Authentication alert is incorrect'
+
+    def login_empty_password(self):
+        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
+        email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
+        email_input.send_keys('emir' + LoginData.email)
+        self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
+        alert_message = (WebDriverWait(self.browser, 10).
+                         until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT)))
+        alert_message_text = (WebDriverWait(self.browser, 10).
+                              until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT))).text
+        assert alert_message.is_displayed(), 'Fail authentication went wrong'
+        assert alert_message_text == 'Неизвестная ошибка', 'Authentication alert is incorrect'
 
     def login_as_build(self):
         self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
-        email_input.send_keys(*BuildData.email)
+        email_input.send_keys(BuildData.email)
         password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
-        password_input.send_keys(*BuildData.password)
+        password_input.send_keys(BuildData.password)
         self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
         assert self.browser.find_element(*BasePageLocators.PROFILE_BUTTON), 'Authentication data of build is not valid'
 
@@ -58,7 +110,7 @@ class BasePage:
         self.browser.find_element(*BasePageLocators.PHOTO_OF_THE_DAY_LINK).click()
 
         assert (WebDriverWait(self.browser, 10).until
-               (EC.visibility_of_element_located(MainPageLocators.PHOTO_OF_THE_DAY))), 'There is no carousel on page'
+                (EC.visibility_of_element_located(MainPageLocators.PHOTO_OF_THE_DAY))), 'There is no carousel on page'
 
     def change_language(self):
         initial_button = self.browser.find_element(*BasePageLocators.LANGUAGE_SWITCH_BUTTON).text

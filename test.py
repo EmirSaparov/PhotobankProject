@@ -1,8 +1,7 @@
-import pytest
 from pages.main_page import MainPage
 from pages.project_page import ProjectPage
 from pages.profile_page import ProfilePage
-
+import pytest
 
 class TestMainPage:
 
@@ -13,69 +12,83 @@ class TestMainPage:
         page.open()
         page.login()
 
+    @pytest.mark.login
+    def test_login_invalid_email(self, browser):
+        page = MainPage(browser=browser, url=self.url)
+        page.open()
+        page.login_invalid_email()
+
+    @pytest.mark.login
+    def test_login_invalid_password(self, browser):
+        page = MainPage(browser=browser, url=self.url)
+        page.open()
+        page.login_invalid_password()
+
+    @pytest.mark.login
+    def test_login_empty_email(self, browser):
+        page = MainPage(browser=browser, url=self.url)
+        page.open()
+        page.login_empty_email()
+
+    @pytest.mark.login
+    def test_login_empty_password(self, browser):
+        page = MainPage(browser=browser, url=self.url)
+        page.open()
+        page.login_empty_password()
+
     def test_logout(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login()
         page.logout()
 
-    @pytest.mark.potd
     def test_go_to_photo_of_the_day(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.go_to_photo_of_the_day()
 
-    @pytest.mark.proj_page
     def test_go_to_projects(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.go_to_projects_page()
 
-    @pytest.mark.lang_switch
     def test_switch_language(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.change_language()
 
-    @pytest.mark.slider
     def test_go_to_project_from_slider(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.open_project_from_slider()
 
-    @pytest.mark.slider
     def test_add_proj_in_slider(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login()
         page.add_new_project_in_slider()
 
-    @pytest.mark.slider
     def test_delete_proj_from_slider(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login()
         page.delete_added_project_in_slider()
 
-    @pytest.mark.slider
     def test_can_move_forth_and_back(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.slider_can_go_forward_back()
 
-    @pytest.mark.proj_page
     def test_go_projects_page_from_description(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.go_to_projects_from_description()
 
-    @pytest.mark.proj_page
     def test_go_projects_page_from_all_proj_button(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.more_projects_button()
 
-    @pytest.mark.potd
     def test_check_potd_slider_can_move_forth_back(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -95,47 +108,41 @@ class TestMainPage:
     #     page.open()
     #     page.login()
     #     page.create_child_project()
-    @pytest.mark.footer_links
+
     def test_go_to_projects_page_from_footer(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.go_to_projects_page_from_footer()
 
-    @pytest.mark.footer_links
     def test_go_to_photo_of_the_day_from_footer(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.go_to_photo_of_the_day_from_footer()
 
-    @pytest.mark.burger_menu
     def test_go_to_my_photos_page_from_burger_menu(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login()
         page.go_to_my_photos_burger_menu()
 
-    @pytest.mark.burger_menu
     def test_go_to_favorites_page_from_burger_menu(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login()
         page.go_to_favorites_burger_menu()
 
-    @pytest.mark.burger_menu
     def test_go_to_settings_page_from_burger_menu(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login()
         page.go_to_settings_burger_menu()
 
-    @pytest.mark.burger_menu
     def test_go_to_administration_page_from_burger_menu(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login()
         page.go_to_administration_burger_menu()
 
-    @pytest.mark.burger_menu
     def test_go_to_statistics_page_from_burger_menu(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -251,7 +258,6 @@ class TestMainPage:
         page.login()
         page.album_delete()
 
-    @pytest.mark.new
     def test_edit_project(self, browser):
         page = MainPage(browser=browser, url=f'{self.url}/ru/projects')
         page.open()
@@ -325,7 +331,6 @@ class TestMainPage:
         page.remove_build_role_from_user()
 
     """Build Role test"""
-    @pytest.mark.build
     def test_superadmin_appoint_build(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -333,7 +338,6 @@ class TestMainPage:
         page.go_to_projects_page()
         page.appoint_build_on_project_by_superadmin()
 
-    @pytest.mark.build
     def test_build_have_charges_on_project_as_build(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -341,7 +345,6 @@ class TestMainPage:
         page.go_to_projects_page()
         page.build_have_charges_on_project_as_build()
 
-    @pytest.mark.build
     def test_build_can_edit_project(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -349,7 +352,6 @@ class TestMainPage:
         page.go_to_projects_page()
         page.build_can_edit_project()
 
-    @pytest.mark.build
     def test_superadmin_remove_build(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -357,7 +359,6 @@ class TestMainPage:
         page.go_to_projects_page()
         page.remove_build_from_project_by_superadmin()
 
-    @pytest.mark.build
     def test_build_dont_have_charges_on_project_as_build(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()

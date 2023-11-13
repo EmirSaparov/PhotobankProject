@@ -1,6 +1,4 @@
 import time
-
-import pytest
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators.projects_page_locators import ProjectPageLocators
@@ -309,4 +307,3 @@ class MainPage(BasePage):
         self.browser.refresh()
         created_project = self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT)
         assert created_project.is_displayed(), 'Project is not created'
-
