@@ -3,6 +3,7 @@ from pages.project_page import ProjectPage
 from pages.profile_page import ProfilePage
 import pytest
 
+
 class TestMainPage:
 
     url = 'https://stage.rcfb.abolsoft.ru'
@@ -35,6 +36,19 @@ class TestMainPage:
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login_empty_password()
+
+    @pytest.mark.registration
+    def test_registration(self, browser):
+        page = MainPage(browser=browser, url=self.url)
+        page.open()
+        page.registration()
+
+    @pytest.mark.xfail
+    @pytest.mark.registration
+    def test_registration(self, browser):
+        page = MainPage(browser=browser, url=self.url)
+        page.open()
+        page.registration_if_already_have_account()
 
     def test_logout(self, browser):
         page = MainPage(browser=browser, url=self.url)

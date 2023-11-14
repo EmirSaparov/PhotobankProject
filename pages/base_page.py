@@ -2,10 +2,12 @@ from locators.base_page_locators import BasePageLocators
 from locators.main_page_locators import MainPageLocators
 from locators.profile_page_locators import ProfilePageLocators
 from locators.projects_page_locators import ProjectPageLocators
-from data.data import LoginData, BuildData
+from data.data import LoginData, BuildData, IMAPServiceData, RegistrationData
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+import imaplib
+import email
 
 
 class BasePage:
@@ -18,6 +20,66 @@ class BasePage:
     def open(self):
         self.browser.get(self.url)
         self.browser.maximize_window()
+
+    """Method for getting data from mailbox"""
+    @staticmethod
+    def get_text_from_imap():
+        server = imaplib.IMAP4_SSL(IMAPServiceData.imap_server, IMAPServiceData.imap_port)
+        server.login(user='emiracle@mailsac.com', password=' ')
+
+        server.select('INBOX')
+        status, email_ids = server.search(None, 'ALL')
+        latest_email_id = email_ids[0].split()[-1]
+        status, email_data = server.fetch(latest_email_id, '(RFC822)')
+        print(email_data)
+        raw_email = email_data[0][1]
+        parsed_email = email.message_from_bytes(raw_email)
+        subject = parsed_email['Subject']
+        body = ''
+
+        if parsed_email.is_multipart():
+            for part in parsed_email.get_payload():
+                if part.get_content_type() == 'text/plain':
+                    body = part.get_payload()
+        else:
+            body = parsed_email.get_payload()
+            server.logout()
+        return subject, body
+
+    def registration(self):
+        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
+        self.browser.find_element(*BasePageLocators.REGISTRATION_LINK).click()
+        registration_email = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
+        registration_email.send_keys(RegistrationData.email)
+        registration_password = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
+        registration_password.send_keys(RegistrationData.password)
+        confirmation_password = self.browser.find_element(*BasePageLocators.CONFIRMATION_PASSWORD_INPUT)
+        confirmation_password.send_keys(RegistrationData.password)
+        self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
+        assert self.browser.find_element(*BasePageLocators.PROFILE_BUTTON), 'Registration is not complete'
+
+    def registration_if_already_have_account(self):
+        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
+        self.browser.find_element(*BasePageLocators.REGISTRATION_LINK).click()
+        registration_email = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
+        registration_email.send_keys(LoginData.email)
+        registration_password = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
+        registration_password.send_keys(LoginData.password)
+        confirmation_password = self.browser.find_element(*BasePageLocators.CONFIRMATION_PASSWORD_INPUT)
+        confirmation_password.send_keys(LoginData.password)
+        self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
+        alert_message = (WebDriverWait(self.browser, 10).
+                         until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT)))
+        alert_message_text = (WebDriverWait(self.browser, 10).
+                              until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT))).text
+        assert alert_message.is_displayed(), 'Fail registration went wrong'
+        assert alert_message_text == 'Email уже используется', 'Registrartion alert is incorrect'
+
+    def forgot_password(self):
+        pass
+
+    def password_recover(self):
+        pass
 
     def login(self):
         self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
