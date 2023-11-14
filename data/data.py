@@ -1,7 +1,16 @@
+import random
+import string
+import random
+
 
 class LoginData:
     email = 'm.sergeev@magnatmedia.com'
     password = 'GL1kGIm29a'
+
+
+class RegistrationData:
+    email = ''.join(random.choices(string.ascii_letters, k=10)) + '@mailsac.com'
+    password = 123123123
 
 
 class BuildData:
@@ -54,4 +63,11 @@ class EditAlbumData:
     name_en_edit = 'test album edited'
     desc_ru_edit = 'Этот альбом предназначен для тестов редактированный'
     desc_en_edit = 'This album for testing purposes edite'
+
+
+class IMAPServiceData:
+    imap_server = 'imap.mail.ru'
+    imap_port = 993
+    username = ''
+    password = '123123123'
 
