@@ -6,7 +6,9 @@ class BasePageLocators:
     EMAIL_INPUT = (By.CSS_SELECTOR, '.email > input[type=text]')
     PASSWORD_INPUT = (By.CSS_SELECTOR, '.password > input[type=password]')
     CONFIRMATION_PASSWORD_INPUT = (By.CSS_SELECTOR, 'div:nth-child(5) > input[type=password]')
+    PASSWORD_VISIBILITY_BUTTON = (By.CSS_SELECTOR, '.password > span')
     INVALID_LOGIN_ALERT = (By.CLASS_NAME, 'modal-alert')
+    EMAIL_SENT_ALERT = (By.CLASS_NAME, 'modal-alert')
     SUBMIT_BUTTON = (By.CLASS_NAME, 'loginBtn')
     PROFILE_BUTTON = (By.CLASS_NAME, 'header-profile')
     LOGOUT_BUTTON = (By.CLASS_NAME, 'mobileProfile-logout')
@@ -25,3 +27,5 @@ class BasePageLocators:
     ADMINISTRATION_BUTTON = (By.CSS_SELECTOR, '.mobileProfile-list > a:nth-child(5)')
     STATISTICS_BUTTON = (By.CSS_SELECTOR, '.mobileProfile-list > a:nth-child(4)')
     REGISTRATION_LINK = (By.CSS_SELECTOR, 'header  span.secondary')
+    PASSWORD_RECOVER_LINK = (By.CSS_SELECTOR, '.modal-sublinks .primary')
+

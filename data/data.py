@@ -13,9 +13,13 @@ class RegistrationData:
     password = 123123123
 
 
+class PasswordRecoverData:
+    email = 'e.saparov@lightdigital.ru'
+
+
 class BuildData:
     email = 'emir-saparo@rambler.ru'
-    password = 'CpifW3HC89'
+    password = 'G92gV8GIoo'
     build_full_name = 'Сапаров Эмир Рамблер'
 
 
@@ -68,6 +72,5 @@ class EditAlbumData:
 class IMAPServiceData:
     imap_server = 'imap.mail.ru'
     imap_port = 993
-    username = ''
-    password = '123123123'
-
+    username = 'e.saparov@lightdigital.ru'
+    password = 'UnrhETL4tsCQg4QnGA2g'

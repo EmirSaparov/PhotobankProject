@@ -13,42 +13,50 @@ class TestMainPage:
         page.open()
         page.login()
 
-    @pytest.mark.login
     def test_login_invalid_email(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login_invalid_email()
 
-    @pytest.mark.login
     def test_login_invalid_password(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login_invalid_password()
 
-    @pytest.mark.login
     def test_login_empty_email(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login_empty_email()
 
-    @pytest.mark.login
     def test_login_empty_password(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login_empty_password()
 
-    @pytest.mark.registration
+    # @pytest.mark.registration
     def test_registration(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.registration()
 
-    @pytest.mark.xfail
     @pytest.mark.registration
+    def test_recover_password(self, browser):
+        page = MainPage(browser=browser, url=self.url)
+        page.open()
+        page.password_recover()
+
+    @pytest.mark.xfail
+    # @pytest.mark.registration
     def test_registration(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.registration_if_already_have_account()
+
+    @pytest.mark.login
+    def test_login_password_input_visibility(self, browser):
+        page = MainPage(browser=browser, url=self.url)
+        page.open()
+        page.visibility_button_switch()
 
     def test_logout(self, browser):
         page = MainPage(browser=browser, url=self.url)
