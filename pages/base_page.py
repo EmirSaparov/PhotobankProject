@@ -1,8 +1,12 @@
+import base64
+import re
+import time
+
 from locators.base_page_locators import BasePageLocators
 from locators.main_page_locators import MainPageLocators
 from locators.profile_page_locators import ProfilePageLocators
 from locators.projects_page_locators import ProjectPageLocators
-from data.data import LoginData, BuildData, IMAPServiceData, RegistrationData
+from data.data import LoginData, BuildData, IMAPServiceData, RegistrationData, PasswordRecoverData
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
@@ -22,29 +26,25 @@ class BasePage:
         self.browser.maximize_window()
 
     """Method for getting data from mailbox"""
+
     @staticmethod
     def get_text_from_imap():
         server = imaplib.IMAP4_SSL(IMAPServiceData.imap_server, IMAPServiceData.imap_port)
-        server.login(user='emiracle@mailsac.com', password=' ')
-
+        server.login(user=IMAPServiceData.username, password=IMAPServiceData.password)
         server.select('INBOX')
         status, email_ids = server.search(None, 'ALL')
         latest_email_id = email_ids[0].split()[-1]
         status, email_data = server.fetch(latest_email_id, '(RFC822)')
-        print(email_data)
         raw_email = email_data[0][1]
         parsed_email = email.message_from_bytes(raw_email)
-        subject = parsed_email['Subject']
-        body = ''
-
-        if parsed_email.is_multipart():
-            for part in parsed_email.get_payload():
-                if part.get_content_type() == 'text/plain':
-                    body = part.get_payload()
-        else:
-            body = parsed_email.get_payload()
-            server.logout()
-        return subject, body
+        content = parsed_email.get_payload()
+        for part in content:
+            text = base64.b64decode(part.get_payload()).decode()
+            pattern = r"Ваш новый пароль: (\w+)"
+            match = re.search(pattern, text)
+            if match:
+                password = match.group(1)
+                return password
 
     def registration(self):
         self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
@@ -75,11 +75,44 @@ class BasePage:
         assert alert_message.is_displayed(), 'Fail registration went wrong'
         assert alert_message_text == 'Email уже используется', 'Registrartion alert is incorrect'
 
-    def forgot_password(self):
-        pass
-
     def password_recover(self):
-        pass
+        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
+        self.browser.find_element(*BasePageLocators.PASSWORD_RECOVER_LINK).click()
+        self.browser.find_element(*BasePageLocators.EMAIL_INPUT).click()
+        self.browser.find_element(*BasePageLocators.EMAIL_INPUT).clear()
+        self.browser.find_element(*BasePageLocators.EMAIL_INPUT).send_keys(PasswordRecoverData.email)
+        self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
+        alert_message_text = (WebDriverWait(self.browser, 10).
+                              until(EC.visibility_of_element_located(BasePageLocators.EMAIL_SENT_ALERT))).text
+        assert alert_message_text == 'Новый пароль отправлен на указанную почту', 'Registrartion alert is incorrect'
+        time.sleep(5)
+        new_password = self.get_text_from_imap()
+        print(new_password)
+        self.browser.find_element(*BasePageLocators.REGISTRATION_LINK).click()
+        time.sleep(2)
+        self.browser.find_element(*BasePageLocators.EMAIL_INPUT).click()
+        self.browser.find_element(*BasePageLocators.EMAIL_INPUT).clear()
+        self.browser.find_element(*BasePageLocators.EMAIL_INPUT).send_keys(PasswordRecoverData.email)
+        self.browser.find_element(*BasePageLocators.PASSWORD_INPUT).click()
+        self.browser.find_element(*BasePageLocators.PASSWORD_INPUT).clear()
+        self.browser.find_element(*BasePageLocators.PASSWORD_INPUT).send_keys(new_password)
+        self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
+        assert self.browser.find_element(*BasePageLocators.PROFILE_BUTTON), 'Password recover is not complete'
+
+    def visibility_button_switch(self):
+        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
+        email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
+        email_input.send_keys(LoginData.email)
+        password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
+        password_input.send_keys(LoginData.password)
+        visibility_button = self.browser.find_element(*BasePageLocators.PASSWORD_VISIBILITY_BUTTON)
+        visibility_button.click()
+        visibility_on_text = visibility_button.get_attribute('title')
+        print(visibility_on_text)
+        assert visibility_on_text == 'Скрыть пароль', 'Password is not visible'
+        visibility_button.click()
+        visibility_off_text = visibility_button.get_attribute('title')
+        assert visibility_off_text == 'Показать пароль', 'Password is visible'
 
     def login(self):
         self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
