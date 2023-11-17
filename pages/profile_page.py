@@ -6,24 +6,20 @@ from data.data import BuildData
 
 
 class ProfilePage(BasePage):
-    def go_to_my_photos(self):
-        self.browser.find_element(*ProfilePageLocators.MY_PHOTOS_BUTTON).click()
-        page_title = self.browser.find_element(*ProfilePageLocators.MY_PHOTOS_TITLE)
-        assert page_title.is_displayed(), 'This is not My photos page'
 
     def go_to_favorites(self):
         self.browser.find_element(*ProfilePageLocators.FAVORITES_BUTTON).click()
-        page_title = self.browser.find_element(*ProfilePageLocators.FAVORITES_TITLE)
+        page_title = self.browser.find_element(*ProfilePageLocators.TITLE)
         assert page_title.is_displayed(), 'This is not Favorites page'
 
     def go_to_settings(self):
         self.browser.find_element(*ProfilePageLocators.SETTINGS_BUTTON).click()
-        page_title = self.browser.find_element(*ProfilePageLocators.SETTINGS_TITLE)
+        page_title = self.browser.find_element(*ProfilePageLocators.TITLE)
         assert page_title.is_displayed(), 'This is not Settings page'
 
     def go_to_administration(self):
         self.browser.find_element(*ProfilePageLocators.ADMINISTRATION_BUTTON).click()
-        page_title = self.browser.find_element(*ProfilePageLocators.ADMINISTRATION_TITLE)
+        page_title = self.browser.find_element(*ProfilePageLocators.TITLE)
         assert page_title.is_displayed(), 'This is not Administration page'
 
     def go_to_statistics(self):
