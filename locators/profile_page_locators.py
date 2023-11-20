@@ -16,3 +16,11 @@ class ProfilePageLocators:
     CHANGE_ROLE_BUTTON = (By.CLASS_NAME, 'list-item__change')
     BUILD_ROLE = (By.CSS_SELECTOR, '.user-roles > div:nth-child(2)')
     SAVE_ROLE_BUTTON = (By.CLASS_NAME, 'user-save')
+
+    """Settings page"""
+    FIRST_NAME = (By.ID, 'firstName')
+    LAST_NAME = (By.ID, 'lastName')
+    MIDDLE_NAME = (By.CSS_SELECTOR, '.settings-fields > :nth-child(6)')
+    SETTINGS_SUBMIT_BUTTON = (By.CLASS_NAME, 'settings-fields__save')
+    MENU_PROFILE_NAME = (By.CLASS_NAME, 'menu-profile__name')
+    FIRST_NAME_INPUT_UNFILLED = (By.CSS_SELECTOR, '.settings-fields__input.error')

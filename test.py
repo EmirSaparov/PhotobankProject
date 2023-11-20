@@ -304,6 +304,28 @@ class TestMainPage:
         page.go_to_favorites_burger_menu()
         page.go_to_settings()
 
+    def test_change_username_filling_required_inputs_in_settings_page(self, browser):
+        page = ProfilePage(browser=browser, url=self.url)
+        page.open()
+        page.login()
+        page.go_to_settings_burger_menu()
+        page.change_username_filling_required_fields_in_settings()
+
+    def test_change_username_not_filling_required_inputs_in_settings_page(self, browser):
+        page = ProfilePage(browser=browser, url=self.url)
+        page.open()
+        page.login()
+        page.go_to_settings_burger_menu()
+        page.change_username_not_filling_required_fields_in_settings()
+
+    def test_change_username_in_settings_page(self, browser):
+        page = ProfilePage(browser=browser, url=self.url)
+        page.open()
+        page.login()
+        page.go_to_settings_burger_menu()
+        page.change_username_in_settings()
+
+
     def test_go_to_administration_page(self, browser):
         page = ProfilePage(browser=browser, url=self.url)
         page.open()
