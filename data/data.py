@@ -9,7 +9,7 @@ class LoginData:
 
 
 class RegistrationData:
-    email = ''.join(random.choices(string.ascii_letters, k=10)) + '@mailsac.com'
+    email = 'emir-saparo+test@rambler.ru'
     password = 123123123
 
 

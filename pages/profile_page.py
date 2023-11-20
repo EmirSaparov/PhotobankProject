@@ -1,11 +1,11 @@
 import time
-
 from selenium.webdriver import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .base_page import BasePage
 from locators.profile_page_locators import ProfilePageLocators
-from data.data import BuildData
+from data.data import BuildData, RegistrationData
+from selenium.webdriver.remote.switch_to import SwitchTo
 
 
 class ProfilePage(BasePage):
@@ -79,6 +79,16 @@ class ProfilePage(BasePage):
         found_user_name = self.browser.find_element(*ProfilePageLocators.FOUND_USER_NAME).text
         print(found_user_name)
         assert found_user_name == BuildData.build_full_name, 'Search result fail'
+
+    def delete_user(self):
+        search_input = self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_INPUT)
+        search_input.send_keys(RegistrationData.email)
+        self.browser.find_element(*ProfilePageLocators.DELETE_BUTTON).click()
+        alert_confirm = self.browser.switch_to.alert
+        alert_confirm.accept()
+        success_alert = WebDriverWait(self.browser, 10).until(EC.visibility_of_element_located(
+            ProfilePageLocators.SUCCESS_DELETE_ALERT))
+        assert success_alert.is_displayed(), 'User is not deleted'
 
     def appoint_users_role_build(self):
         self.browser.find_element(*ProfilePageLocators.ADMINISTRATION_BUTTON).click()

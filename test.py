@@ -33,13 +33,12 @@ class TestMainPage:
         page.open()
         page.login_empty_password()
 
-    # @pytest.mark.registration
+    @pytest.mark.registration
     def test_registration(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.registration()
 
-    @pytest.mark.registration
     def test_recover_password(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -47,7 +46,7 @@ class TestMainPage:
 
     @pytest.mark.xfail
     # @pytest.mark.registration
-    def test_registration(self, browser):
+    def test_registration_already_have_account(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.registration_if_already_have_account()
@@ -396,3 +395,11 @@ class TestMainPage:
         page.login_as_build()
         page.go_to_projects_page()
         page.build_dont_have_charges_on_project_after_remove_as_build()
+
+    @pytest.mark.registration
+    def test_delete_user(self, browser):
+        page = ProfilePage(browser=browser, url=self.url)
+        page.open()
+        page.login()
+        page.go_to_administration_burger_menu()
+        page.delete_user()
