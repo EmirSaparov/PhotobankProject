@@ -12,10 +12,12 @@ class ProfilePageLocators:
     """Administration page"""
     USERS_SEARCH_INPUT = (By.CSS_SELECTOR, 'div.search > input')
     USERS_SEARCH_BUTTON = (By.CSS_SELECTOR, 'div.search > span:nth-child(2)')
+    DELETE_BUTTON = (By.CLASS_NAME, 'list-item__delete')
     FOUND_USER_NAME = (By.CLASS_NAME, 'list-item__name')
     CHANGE_ROLE_BUTTON = (By.CLASS_NAME, 'list-item__change')
     BUILD_ROLE = (By.CSS_SELECTOR, '.user-roles > div:nth-child(2)')
     SAVE_ROLE_BUTTON = (By.CLASS_NAME, 'user-save')
+    SUCCESS_DELETE_ALERT = (By.CLASS_NAME, 'footer-modal__text')
 
     """Settings page"""
     FIRST_NAME = (By.ID, 'firstName')
