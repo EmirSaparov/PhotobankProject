@@ -141,12 +141,6 @@ class TestMainPage:
         page.open()
         page.go_to_photo_of_the_day_from_footer()
 
-    def test_go_to_my_photos_page_from_burger_menu(self, browser):
-        page = MainPage(browser=browser, url=self.url)
-        page.open()
-        page.login()
-        page.go_to_my_photos_burger_menu()
-
     def test_go_to_favorites_page_from_burger_menu(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -296,18 +290,11 @@ class TestMainPage:
 
     """Profile page test"""
 
-    def test_go_to_my_photos_page(self, browser):
+    def test_go_to_favorites(self, browser):
         page = ProfilePage(browser=browser, url=self.url)
         page.open()
         page.login()
-        page.go_to_favorites_burger_menu()
-        page.go_to_my_photos()
-
-    def test_go_to_favorites_page(self, browser):
-        page = ProfilePage(browser=browser, url=self.url)
-        page.open()
-        page.login()
-        page.go_to_my_photos_burger_menu()
+        page.go_to_statistics_burger_menu()
         page.go_to_favorites()
 
     def test_go_to_settings_page(self, browser):
@@ -316,6 +303,28 @@ class TestMainPage:
         page.login()
         page.go_to_favorites_burger_menu()
         page.go_to_settings()
+
+    def test_change_username_filling_required_inputs_in_settings_page(self, browser):
+        page = ProfilePage(browser=browser, url=self.url)
+        page.open()
+        page.login()
+        page.go_to_settings_burger_menu()
+        page.change_username_filling_required_fields_in_settings()
+
+    def test_change_username_not_filling_required_inputs_in_settings_page(self, browser):
+        page = ProfilePage(browser=browser, url=self.url)
+        page.open()
+        page.login()
+        page.go_to_settings_burger_menu()
+        page.change_username_not_filling_required_fields_in_settings()
+
+    def test_change_username_in_settings_page(self, browser):
+        page = ProfilePage(browser=browser, url=self.url)
+        page.open()
+        page.login()
+        page.go_to_settings_burger_menu()
+        page.change_username_in_settings()
+
 
     def test_go_to_administration_page(self, browser):
         page = ProfilePage(browser=browser, url=self.url)

@@ -22,10 +22,9 @@ class BasePageLocators:
     PROJECTS_LINK_FOOTER = (By.CSS_SELECTOR, '.footer-menu > a:nth-child(1)')
     PHOTO_OF_THE_DAY_LINK_FOOTER = (By.CSS_SELECTOR, '.footer-menu > a:nth-child(3)')
     FAVORITES_BUTTON = (By.CSS_SELECTOR, '.mobileProfile-list > a:nth-child(1)')
-    MY_PHOTOS_BUTTON = (By.CSS_SELECTOR, '.mobileProfile-list > a:nth-child(2)')
-    SETTINGS_BUTTON = (By.CSS_SELECTOR, '.mobileProfile-list > a:nth-child(3)')
-    ADMINISTRATION_BUTTON = (By.CSS_SELECTOR, '.mobileProfile-list > a:nth-child(5)')
-    STATISTICS_BUTTON = (By.CSS_SELECTOR, '.mobileProfile-list > a:nth-child(4)')
+    SETTINGS_BUTTON = (By.CSS_SELECTOR, '.mobileProfile-list > a:nth-child(2)')
+    ADMINISTRATION_BUTTON = (By.CSS_SELECTOR, '.mobileProfile-list > a:nth-child(4)')
+    STATISTICS_BUTTON = (By.CSS_SELECTOR, '.mobileProfile-list > a:nth-child(3)')
     REGISTRATION_LINK = (By.CSS_SELECTOR, 'header  span.secondary')
     PASSWORD_RECOVER_LINK = (By.CSS_SELECTOR, '.modal-sublinks .primary')
 

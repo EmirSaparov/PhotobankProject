@@ -232,29 +232,23 @@ class BasePage:
         assert (WebDriverWait(self.browser, 10).until
                 (EC.visibility_of_element_located(MainPageLocators.PHOTO_OF_THE_DAY))), 'There is no carousel on page'
 
-    def go_to_my_photos_burger_menu(self):
-        self.browser.find_element(*BasePageLocators.PROFILE_BUTTON).click()
-        self.browser.find_element(*BasePageLocators.MY_PHOTOS_BUTTON).click()
-        assert (WebDriverWait(self.browser, 10).until
-                (EC.visibility_of_element_located(ProfilePageLocators.MY_PHOTOS_TITLE))), 'This is not My photos page'
-
     def go_to_favorites_burger_menu(self):
         self.browser.find_element(*BasePageLocators.PROFILE_BUTTON).click()
         self.browser.find_element(*BasePageLocators.FAVORITES_BUTTON).click()
         assert (WebDriverWait(self.browser, 10).until
-                (EC.visibility_of_element_located(ProfilePageLocators.FAVORITES_TITLE))), 'This is not Favorites page'
+                (EC.visibility_of_element_located(ProfilePageLocators.TITLE))), 'This is not Favorites page'
 
     def go_to_settings_burger_menu(self):
         self.browser.find_element(*BasePageLocators.PROFILE_BUTTON).click()
         self.browser.find_element(*BasePageLocators.SETTINGS_BUTTON).click()
         assert (WebDriverWait(self.browser, 10).until
-                (EC.visibility_of_element_located(ProfilePageLocators.SETTINGS_TITLE))), 'This is not Settings page'
+                (EC.visibility_of_element_located(ProfilePageLocators.TITLE))), 'This is not Settings page'
 
     def go_to_administration_burger_menu(self):
         self.browser.find_element(*BasePageLocators.PROFILE_BUTTON).click()
         self.browser.find_element(*BasePageLocators.ADMINISTRATION_BUTTON).click()
         assert (WebDriverWait(self.browser, 10).until
-                (EC.visibility_of_element_located(ProfilePageLocators.ADMINISTRATION_TITLE))), \
+                (EC.visibility_of_element_located(ProfilePageLocators.TITLE))), \
             'This is not Administration page'
 
     def go_to_statistics_burger_menu(self):
