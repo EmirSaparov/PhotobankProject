@@ -73,7 +73,7 @@ class BasePage:
         alert_message_text = (WebDriverWait(self.browser, 10).
                               until(EC.visibility_of_element_located(BasePageLocators.INVALID_LOGIN_ALERT))).text
         assert alert_message.is_displayed(), 'Fail registration went wrong'
-        assert alert_message_text == 'Email уже используется', 'Registrartion alert is incorrect'
+        assert alert_message_text == 'Почта уже используется', 'Registrartion alert is incorrect'
 
     def password_recover(self):
         self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
