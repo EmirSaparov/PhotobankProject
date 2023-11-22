@@ -44,6 +44,7 @@ class ProjectPageLocators:
     """Add photo"""
     ADD_PHOTO_BUTTON = (By.XPATH, '//div[text()=" Добавить фото "]')
     UPLOAD_PHOTO_INPUT = (By.ID, 'hiddenUploader')
+    UPLOAD_STATE = (By.CLASS_NAME, 'event-uploader__drag-loading-state')
     UPLOAD_PHOTO_BUTTON = (By.CLASS_NAME, 'event-head__upload')
     CLOSE_UPLOAD_MODAL = (By.CSS_SELECTOR, '.event-head__title-actions--item.event-head__title-actions--item-selected')
     UPLOADED_PHOTOS_LIST = (By.XPATH, '//*[@id="app"]/div[2]/div/div/div[2]')
@@ -72,6 +73,7 @@ class ProjectPageLocators:
     PHOTO_GROUP_EDIT_SELECTOR_HIDE = (By.ID, 'vs1__option-1')
     PHOTO_GROUP_EDIT_SELECTOR_SHOW = (By.ID, 'vs1__option-2')
     APPLY_BUTTON = (By.CSS_SELECTOR, ' div.fixed__btns > span:nth-child(1)')
+    CHOOSE_ONE_PHOTO_CHECKBOX = (By.CLASS_NAME, 'event-list__image--checkbox')
     CHOOSE_ALL_CHECKBOXES = (By.CSS_SELECTOR, ' div.fixed__btns > span:nth-child(2)')
     PHOTO_EDIT_DATE_TIME_PICKER = (By.CLASS_NAME, '.dp__pointer.dp__input')
     PHOTO_EDIT_PLACE_RU = (By.CSS_SELECTOR, ' span:nth-child(4) > input')

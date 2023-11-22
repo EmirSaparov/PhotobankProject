@@ -33,7 +33,6 @@ class TestMainPage:
         page.open()
         page.login_empty_password()
 
-    @pytest.mark.registration
     def test_registration(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -44,14 +43,11 @@ class TestMainPage:
         page.open()
         page.password_recover()
 
-    @pytest.mark.xfail
-    # @pytest.mark.registration
     def test_registration_already_have_account(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.registration_if_already_have_account()
 
-    @pytest.mark.login
     def test_login_password_input_visibility(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -171,18 +167,6 @@ class TestMainPage:
         page.login()
         page.create_album()
 
-    def test_create_album_out_of_date(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
-        page.open()
-        page.login()
-        page.create_album_out_of_date()
-
-    def test_create_album_no_filter(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
-        page.open()
-        page.login()
-        page.create_album_no_filter()
-
     def test_upload_photo(self, browser):
         page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
         page.open()
@@ -273,6 +257,19 @@ class TestMainPage:
         page.login()
         page.album_delete()
 
+    def test_create_album_no_filter(self, browser):
+        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page.open()
+        page.login()
+        page.create_album_no_filter()
+
+    def test_create_album_out_of_date(self, browser):
+        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page.open()
+        page.login()
+        page.create_album_out_of_date()
+
+    @pytest.mark.new
     def test_edit_project(self, browser):
         page = MainPage(browser=browser, url=f'{self.url}/ru/projects')
         page.open()
@@ -324,7 +321,6 @@ class TestMainPage:
         page.go_to_settings_burger_menu()
         page.change_username_in_settings()
 
-
     def test_go_to_administration_page(self, browser):
         page = ProfilePage(browser=browser, url=self.url)
         page.open()
@@ -346,22 +342,14 @@ class TestMainPage:
         page.go_to_favorites_burger_menu()
         page.search_for_users_in_administration_page()
 
-    def test_appoint_user_build(self, browser):
+    def test_appoint_user_build_role(self, browser):
         page = ProfilePage(browser=browser, url=self.url)
         page.open()
         page.login()
         page.go_to_favorites_burger_menu()
         page.appoint_users_role_build()
 
-    def test_remove_build_role_from_user(self, browser):
-        page = ProfilePage(browser=browser, url=self.url)
-        page.open()
-        page.login()
-        page.go_to_favorites_burger_menu()
-        page.remove_build_role_from_user()
-
-    """Build Role test"""
-    def test_superadmin_appoint_build(self, browser):
+    def test_superadmin_appoint_build_on_project(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
         page.login()
@@ -396,7 +384,13 @@ class TestMainPage:
         page.go_to_projects_page()
         page.build_dont_have_charges_on_project_after_remove_as_build()
 
-    @pytest.mark.registration
+    def test_remove_build_role_from_user(self, browser):
+        page = ProfilePage(browser=browser, url=self.url)
+        page.open()
+        page.login()
+        page.go_to_favorites_burger_menu()
+        page.remove_build_role_from_user()
+
     def test_delete_user(self, browser):
         page = ProfilePage(browser=browser, url=self.url)
         page.open()

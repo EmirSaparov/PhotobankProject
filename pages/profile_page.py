@@ -33,7 +33,7 @@ class ProfilePage(BasePage):
         self.browser.find_element(*ProfilePageLocators.SETTINGS_SUBMIT_BUTTON).click()
         time.sleep(2)
         profile_name = self.browser.find_element(*ProfilePageLocators.MENU_PROFILE_NAME).text
-        assert profile_name == 'Сергеевв Максимм Алексеевичч', 'Profile username is not changed'
+        assert profile_name == 'Сергеев Максим Алексеевич', 'Profile username is not changed'
 
     def change_username_filling_required_fields_in_settings(self):
         self.browser.find_element(*ProfilePageLocators.FIRST_NAME).click()
@@ -83,6 +83,9 @@ class ProfilePage(BasePage):
     def delete_user(self):
         search_input = self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_INPUT)
         search_input.send_keys(RegistrationData.email)
+        self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_BUTTON).click()
+        WebDriverWait(self.browser, 10).until(EC.text_to_be_present_in_element
+                                              (ProfilePageLocators.FOUND_USER_NAME, RegistrationData.email))
         self.browser.find_element(*ProfilePageLocators.DELETE_BUTTON).click()
         alert_confirm = self.browser.switch_to.alert
         alert_confirm.accept()

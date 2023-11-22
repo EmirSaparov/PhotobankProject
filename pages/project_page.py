@@ -81,7 +81,7 @@ class ProjectPage(BasePage):
         album_desc_ru.send_keys(CreateAlbumData.album_desc_ru_out_of_date)
         album_desc_en.send_keys(CreateAlbumData.album_desc_en_out_of_date)
         self.browser.find_element(*ProjectPageLocators.ALBUM_CREATE_BUTTON).click()
-        created_album = self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM)
+        created_album = self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM_OUT_OF_DATE)
         assert created_album.is_displayed(), 'Album is not created'
 
     def create_album_no_filter(self):
@@ -203,11 +203,12 @@ class ProjectPage(BasePage):
         self.browser.find_element(*ProjectPageLocators.SPECIFIC_ALBUM).click()
         self.browser.find_element(*ProjectPageLocators.ADD_PHOTO_BUTTON).click()
         upload_input = self.browser.find_element(*ProjectPageLocators.UPLOAD_PHOTO_INPUT)
-        upload_input.send_keys(os.getcwd() + '/images/album_photo1.jpg')
-        upload_input.send_keys(os.getcwd() + '/images/album_photo2.jpg')
-        upload_input.send_keys(os.getcwd() + '/images/album_photo3.jpg')
+        upload_input.send_keys(os.getcwd() + '/images/album_photo1.jpg\n'
+                               + os.getcwd() + '/images/album_photo2.jpg\n'
+                               + os.getcwd() + '/images/album_photo3.jpg')
         self.browser.find_element(*ProjectPageLocators.UPLOAD_PHOTO_BUTTON).click()
-        time.sleep(6)
+        WebDriverWait(self.browser, 20).until(EC.text_to_be_present_in_element(
+            ProjectPageLocators.UPLOAD_STATE, '100%'))
         self.browser.find_element(*ProjectPageLocators.CLOSE_UPLOAD_MODAL).click()
         uploaded_photo_list = self.browser.find_elements(*ProjectPageLocators.UPLOADED_PHOTOS_LIST)
         print(len(uploaded_photo_list))

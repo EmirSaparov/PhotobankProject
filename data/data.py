@@ -1,7 +1,3 @@
-import random
-import string
-import random
-
 
 class LoginData:
     email = 'm.sergeev@magnatmedia.com'
