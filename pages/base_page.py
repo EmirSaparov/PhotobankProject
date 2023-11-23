@@ -2,6 +2,8 @@ import base64
 import re
 import time
 
+from selenium.common import NoSuchElementException
+
 from locators.base_page_locators import BasePageLocators
 from locators.main_page_locators import MainPageLocators
 from locators.profile_page_locators import ProfilePageLocators
@@ -23,6 +25,10 @@ class BasePage:
 
     def open(self):
         self.browser.get(self.url)
+        self.browser.maximize_window()
+
+    def open_login_link(self):
+        self.browser.get(self.url + "#login")
         self.browser.maximize_window()
 
     """Method for getting data from mailbox"""
@@ -47,7 +53,6 @@ class BasePage:
                 return password
 
     def registration(self):
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         self.browser.find_element(*BasePageLocators.REGISTRATION_LINK).click()
         registration_email = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
         registration_email.send_keys(RegistrationData.email)
@@ -59,7 +64,6 @@ class BasePage:
         assert self.browser.find_element(*BasePageLocators.PROFILE_BUTTON), 'Registration is not complete'
 
     def registration_if_already_have_account(self):
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         self.browser.find_element(*BasePageLocators.REGISTRATION_LINK).click()
         registration_email = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
         registration_email.send_keys(LoginData.email)
@@ -76,7 +80,6 @@ class BasePage:
         assert alert_message_text == 'Почта уже используется', 'Registrartion alert is incorrect'
 
     def password_recover(self):
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         self.browser.find_element(*BasePageLocators.PASSWORD_RECOVER_LINK).click()
         self.browser.find_element(*BasePageLocators.EMAIL_INPUT).click()
         self.browser.find_element(*BasePageLocators.EMAIL_INPUT).clear()
@@ -100,7 +103,6 @@ class BasePage:
         assert self.browser.find_element(*BasePageLocators.PROFILE_BUTTON), 'Password recover is not complete'
 
     def visibility_button_switch(self):
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
         email_input.send_keys(LoginData.email)
         password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
@@ -115,7 +117,6 @@ class BasePage:
         assert visibility_off_text == 'Показать пароль', 'Password is visible'
 
     def login(self):
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
         email_input.send_keys(LoginData.email)
         password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
@@ -124,7 +125,6 @@ class BasePage:
         assert self.browser.find_element(*BasePageLocators.PROFILE_BUTTON), 'Authentication data is not valid'
 
     def login_invalid_email(self):
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
         email_input.send_keys('emir' + LoginData.email)
         password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
@@ -138,7 +138,6 @@ class BasePage:
         assert alert_message_text == 'Неверный логин или пароль', 'Authentication alert is incorrect'
 
     def login_invalid_password(self):
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
         email_input.send_keys(LoginData.email)
         password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
@@ -152,7 +151,6 @@ class BasePage:
         assert alert_message_text == 'Неверный логин или пароль', 'Authentication alert is incorrect'
 
     def login_empty_email(self):
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
         password_input.send_keys(LoginData.password)
         self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
@@ -164,7 +162,6 @@ class BasePage:
         assert alert_message_text == 'Некорректный E-mail', 'Authentication alert is incorrect'
 
     def login_empty_password(self):
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
         email_input.send_keys('emir' + LoginData.email)
         self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
@@ -176,7 +173,6 @@ class BasePage:
         assert alert_message_text == 'Неизвестная ошибка', 'Authentication alert is incorrect'
 
     def login_as_build(self):
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
         email_input = self.browser.find_element(*BasePageLocators.EMAIL_INPUT)
         email_input.send_keys(BuildData.email)
         password_input = self.browser.find_element(*BasePageLocators.PASSWORD_INPUT)
@@ -187,7 +183,11 @@ class BasePage:
     def logout(self):
         self.browser.find_element(*BasePageLocators.PROFILE_BUTTON).click()
         self.browser.find_element(*BasePageLocators.LOGOUT_BUTTON).click()
-        assert self.browser.find_element(*BasePageLocators.LOGIN_LINK), 'Logout is not done'
+        try:
+            profile_logo = self.browser.find_element(*BasePageLocators.PROFILE_BUTTON)
+            assert not profile_logo.is_displayed(), 'Logout is not done'
+        except NoSuchElementException:
+            assert True, 'Photo is not deleted'
 
     def go_to_main_page(self):
         self.browser.find_element(*BasePageLocators.HEADER_LOGO).click()
