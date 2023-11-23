@@ -269,7 +269,6 @@ class TestMainPage:
         page.login()
         page.create_album_out_of_date()
 
-    @pytest.mark.new
     def test_edit_project(self, browser):
         page = MainPage(browser=browser, url=f'{self.url}/ru/projects')
         page.open()
@@ -341,6 +340,13 @@ class TestMainPage:
         page.login()
         page.go_to_favorites_burger_menu()
         page.search_for_users_in_administration_page()
+
+    def test_superadmin_can_clear_search_result(self, browser):
+        page = ProfilePage(browser=browser, url=self.url)
+        page.open()
+        page.login()
+        page.go_to_administration_burger_menu()
+        page.clear_input_for_users_in_administration_page()
 
     def test_appoint_user_build_role(self, browser):
         page = ProfilePage(browser=browser, url=self.url)

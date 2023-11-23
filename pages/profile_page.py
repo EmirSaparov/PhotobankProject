@@ -80,6 +80,19 @@ class ProfilePage(BasePage):
         print(found_user_name)
         assert found_user_name == BuildData.build_full_name, 'Search result fail'
 
+    def clear_input_for_users_in_administration_page(self):
+        search_input = self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_INPUT)
+        search_input.send_keys(BuildData.email)
+        self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_BUTTON).click()
+        WebDriverWait(self.browser, 10).until(EC.text_to_be_present_in_element
+                                              (ProfilePageLocators.FOUND_USER_NAME, BuildData.build_full_name))
+        init_search_result = len(self.browser.find_elements(*ProfilePageLocators.SEARCH_RESULT))
+        print(init_search_result)
+        self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_CLEAR_BUTTON).click()
+        search_result = len(self.browser.find_elements(*ProfilePageLocators.SEARCH_RESULT))
+        print(search_result)
+        assert init_search_result != search_result, 'Clear result didnt work'
+
     def delete_user(self):
         search_input = self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_INPUT)
         search_input.send_keys(RegistrationData.email)
