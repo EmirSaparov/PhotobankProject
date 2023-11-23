@@ -70,7 +70,6 @@ class ProfilePage(BasePage):
         assert page_title.is_displayed(), 'This is not Statistics page'
 
     def search_for_users_in_administration_page(self):
-        self.browser.find_element(*ProfilePageLocators.ADMINISTRATION_BUTTON).click()
         search_input = self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_INPUT)
         search_input.send_keys(BuildData.email)
         self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_BUTTON).click()
@@ -92,6 +91,11 @@ class ProfilePage(BasePage):
         search_result = len(self.browser.find_elements(*ProfilePageLocators.SEARCH_RESULT))
         print(search_result)
         assert init_search_result != search_result, 'Clear result didnt work'
+
+    def search_for_not_exist_users_in_administration_page(self):
+        search_input = self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_INPUT)
+        search_input.send_keys('not_exist_test')
+        self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_BUTTON).click()
 
     def delete_user(self):
         search_input = self.browser.find_element(*ProfilePageLocators.USERS_SEARCH_INPUT)

@@ -2,7 +2,6 @@ from selenium.webdriver.common.by import By
 
 
 class BasePageLocators:
-    LOGIN_LINK = (By.CLASS_NAME, 'header-login')
     EMAIL_INPUT = (By.CSS_SELECTOR, '.email > input[type=text]')
     PASSWORD_INPUT = (By.CSS_SELECTOR, '.password > input[type=password]')
     CONFIRMATION_PASSWORD_INPUT = (By.CSS_SELECTOR, 'div:nth-child(5) > input[type=password]')
