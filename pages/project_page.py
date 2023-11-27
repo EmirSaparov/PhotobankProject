@@ -3,7 +3,7 @@ from selenium.webdriver import ActionChains
 from selenium.common import NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from data.data import CreateAlbumData, EditAlbumData
+from data.data import CreateAlbumData, EditAlbumData, EditProjectData, CreateChildProjectData
 from locators.main_page_locators import MainPageLocators
 from locators.projects_page_locators import ProjectPageLocators
 from pages.base_page import BasePage
@@ -474,6 +474,69 @@ class ProjectPage(BasePage):
         except NoSuchElementException:
             assert True, 'Album is not shown'
 
+    def edit_project(self):
+        # last_height = self.browser.execute_script("return document.body.scrollHeight")
+        # while True:
+        #     self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        #     time.sleep(1)
+        #     new_height = self.browser.execute_script("return document.body.scrollHeight")
+        #     if new_height == last_height:
+        #         break
+        #     last_height = new_height
+        #
+        # self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
+        # self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
+
+        edit_button = (WebDriverWait(self.browser, 10).until
+                       (EC.presence_of_element_located(MainPageLocators.PROJECT_EDIT_BUTTON)))
+        edit_button.click()
+        ru_input = WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located(MainPageLocators.FULL_NAME_RU_INPUT))
+        ru_input.click()
+        ru_input.clear()
+        ru_input.send_keys(EditProjectData.full_name_ru_edit)
+        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).click()
+        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).clear()
+        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).send_keys(EditProjectData.full_name_en_edit)
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).click()
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).clear()
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).send_keys(EditProjectData.short_name_ru_edit)
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).click()
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).clear()
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).send_keys(EditProjectData.short_name_en_edit)
+        time.sleep(2)
+        self.browser.find_element(*MainPageLocators.PROJECT_END_DATE).click()
+        self.browser.find_element(*MainPageLocators.PROJECT_ADD_TODAY_DATE).click()
+        self.browser.find_element(*MainPageLocators.PROJECT_SELECT_DATE_BUTTON).click()
+        time.sleep(2)
+        self.browser.find_element(*MainPageLocators.PROJECT_CREATE_BUTTON).click()
+        time.sleep(3)
+        edited_project = self.browser.find_element(*MainPageLocators.EDITED_SPECIFIC_SUBPROJECT)
+        assert edited_project.is_displayed(), 'Project is not edited'
+        self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
+        time.sleep(2)
+        self.browser.find_element(*MainPageLocators.FULL_NAME_RU_INPUT).click()
+        self.browser.find_element(*MainPageLocators.FULL_NAME_RU_INPUT).clear()
+        (self.browser.find_element(*MainPageLocators.FULL_NAME_RU_INPUT).send_keys
+         (CreateChildProjectData.full_name_ru))
+        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).click()
+        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).clear()
+        (self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).send_keys
+         (CreateChildProjectData.full_name_en))
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).click()
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).clear()
+        (self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).send_keys
+         (CreateChildProjectData.short_name_ru))
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).click()
+        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).clear()
+        (self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).send_keys
+         (CreateChildProjectData.short_name_en))
+        time.sleep(2)
+        self.browser.find_element(*MainPageLocators.PROJECT_CREATE_BUTTON).click()
+        time.sleep(3)
+        edited_back_project = self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT)
+        assert edited_back_project.is_displayed(), 'Project is not edited'
+
     """Not working"""
     def reposition_photos(self):
         last_height = self.browser.execute_script("return document.body.scrollHeight")
@@ -500,3 +563,4 @@ class ProjectPage(BasePage):
         new_position = self.browser.find_element(*ProjectPageLocators.POSITION_PHOTO_NEXT)
         print(new_position)
         assert target != new_position, 'Photo position is not changed'
+

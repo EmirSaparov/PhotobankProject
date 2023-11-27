@@ -6,7 +6,7 @@ from .base_page import BasePage
 from locators.main_page_locators import MainPageLocators
 import os
 from selenium.common.exceptions import NoSuchElementException
-from data.data import CreateProjectData, CreateChildProjectData, EditProjectData, BuildData
+from data.data import CreateProjectData, CreateChildProjectData, BuildData
 
 
 class MainPage(BasePage):
@@ -21,41 +21,50 @@ class MainPage(BasePage):
         projects = (self.browser.find_elements(*MainPageLocators.SLIDER_ALL_PROJECTS))
         if len(projects) < 11:
             self.browser.find_element(*MainPageLocators.SLIDER_CONFIG_BUTTON).click()
-            time.sleep(3)
-            self.browser.find_element(*MainPageLocators.SLIDER_CONFIG_ADD_PROJECT).click()
-            time.sleep(3)
-            self.browser.find_element(*MainPageLocators.SLIDER_PHOTO_COUNT_RADIOBUTTON).click()
+            add_project_button = WebDriverWait(self.browser, 10).until(
+                EC.element_to_be_clickable(MainPageLocators.SLIDER_CONFIG_ADD_PROJECT))
+            add_project_button.click()
+            photo_count_radiobutton = WebDriverWait(self.browser, 10).until(
+                EC.element_to_be_clickable(MainPageLocators.SLIDER_PHOTO_COUNT_RADIOBUTTON))
+            photo_count_radiobutton.click()
             cover_input = self.browser.find_element(*MainPageLocators.SLIDER_COVER_INPUT)
             cover_input.send_keys(os.getcwd() + '/images/input_logo.jpeg')
             self.browser.find_element(*MainPageLocators.SLIDER_PROJECT_MULTISELECTOR).click()
             self.browser.find_element(*MainPageLocators.SLIDER_MULTISELECTOR_CHOOSE).click()
-            time.sleep(3)
-            self.browser.find_element(*MainPageLocators.SLIDER_ADD_PROJECT_SUBMIT_BUTTON).click()
-            time.sleep(3)
-            self.browser.find_element(*MainPageLocators.SLIDER_PREV_PROJECT_BUTTON).click()
-            last_proj = self.browser.find_element(*MainPageLocators.LAST_SLIDER_PROJECT_NAME)
-            time.sleep(4)
-            assert last_proj.text == 'Петербургский международный экономический форум - 2022', 'Project is not added'
+            submit_button = WebDriverWait(self.browser, 10).until(
+                EC.element_to_be_clickable(MainPageLocators.SLIDER_ADD_PROJECT_SUBMIT_BUTTON))
+            submit_button.click()
+            time.sleep(2)
+            prev_project_slider = WebDriverWait(self.browser, 10).until(
+                EC.element_to_be_clickable(MainPageLocators.SLIDER_PREV_PROJECT_BUTTON))
+            prev_project_slider.click()
+            last_project = WebDriverWait(self.browser, 10).\
+                until(EC.text_to_be_present_in_element(MainPageLocators.LAST_SLIDER_PROJECT_NAME,
+                                                       'Петербургский международный экономический форум - 2022'))
+            assert last_project.is_displayed(), 'Project is not added'
         else:
             try:
                 self.browser.find_element(*MainPageLocators.SLIDER_CONFIG_BUTTON).click()
-                time.sleep(2)
-                add_button = self.browser.find_element(*MainPageLocators.SLIDER_CONFIG_ADD_PROJECT)
-                assert False == add_button.is_displayed(), \
+                add_project_button = WebDriverWait(self.browser, 10).until(
+                    EC.element_to_be_clickable(MainPageLocators.SLIDER_CONFIG_ADD_PROJECT))
+                assert not add_project_button.is_displayed(), \
                     'Кнопка добавления проекта существует при наличии полного слайдера'
             except NoSuchElementException:
                 assert True, 'Кнопка добавления проекта существует при наличии полного слайдера'
 
     def delete_added_project_in_slider(self):
         self.browser.find_element(*MainPageLocators.SLIDER_CONFIG_BUTTON).click()
-        time.sleep(3)
-        self.browser.find_element(*MainPageLocators.SLIDER_LAST_PROJECT_DELETE_BUTTON).click()
-        time.sleep(3)
-        self.browser.find_element(*MainPageLocators.SLIDER_ADD_PROJECT_SUBMIT_BUTTON).click()
-        time.sleep(3)
-        self.browser.find_element(*MainPageLocators.SLIDER_PREV_PROJECT_BUTTON).click()
+        last_project_delete = WebDriverWait(self.browser, 10).until(
+            EC.element_to_be_clickable(MainPageLocators.SLIDER_LAST_PROJECT_DELETE_BUTTON))
+        last_project_delete.click()
+        submit_button = WebDriverWait(self.browser, 10).until(
+            EC.element_to_be_clickable(MainPageLocators.SLIDER_ADD_PROJECT_SUBMIT_BUTTON))
+        submit_button.click()
+        prev_project_slider = WebDriverWait(self.browser, 10).until(
+            EC.element_to_be_clickable(MainPageLocators.SLIDER_PREV_PROJECT_BUTTON))
+        prev_project_slider.click()
         last_proj = self.browser.find_element(*MainPageLocators.LAST_SLIDER_PROJECT_NAME)
-        time.sleep(4)
+        print(last_proj.text)
         assert last_proj.text != 'Петербургский международный экономический форум - 2022', 'Project is not deleted'
 
     def slider_can_go_forward_back(self):
@@ -160,80 +169,7 @@ class MainPage(BasePage):
         created_project = self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT)
         assert created_project.is_displayed(), 'Project is not created'
 
-    def edit_project(self):
-        last_height = self.browser.execute_script("return document.body.scrollHeight")
-        while True:
-            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)
-            new_height = self.browser.execute_script("return document.body.scrollHeight")
-            if new_height == last_height:
-                break
-            last_height = new_height
-
-        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
-        self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
-        edit_button = (WebDriverWait(self.browser, 10).until
-                       (EC.presence_of_element_located(MainPageLocators.PROJECT_EDIT_BUTTON)))
-        edit_button.click()
-        ru_input = WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located(MainPageLocators.FULL_NAME_RU_INPUT))
-        ru_input.click()
-        ru_input.clear()
-        ru_input.send_keys(EditProjectData.full_name_ru_edit)
-        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).click()
-        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).clear()
-        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).send_keys(EditProjectData.full_name_en_edit)
-        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).click()
-        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).clear()
-        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).send_keys(EditProjectData.short_name_ru_edit)
-        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).click()
-        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).clear()
-        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).send_keys(EditProjectData.short_name_en_edit)
-        time.sleep(2)
-        self.browser.find_element(*MainPageLocators.PROJECT_END_DATE).click()
-        self.browser.find_element(*MainPageLocators.PROJECT_ADD_TODAY_DATE).click()
-        self.browser.find_element(*MainPageLocators.PROJECT_SELECT_DATE_BUTTON).click()
-        time.sleep(2)
-        self.browser.find_element(*MainPageLocators.PROJECT_CREATE_BUTTON).click()
-        time.sleep(3)
-        edited_project = self.browser.find_element(*MainPageLocators.EDITED_SPECIFIC_SUBPROJECT)
-        assert edited_project.is_displayed(), 'Project is not edited'
-        self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
-        time.sleep(2)
-        self.browser.find_element(*MainPageLocators.FULL_NAME_RU_INPUT).click()
-        self.browser.find_element(*MainPageLocators.FULL_NAME_RU_INPUT).clear()
-        (self.browser.find_element(*MainPageLocators.FULL_NAME_RU_INPUT).send_keys
-         (CreateChildProjectData.full_name_ru))
-        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).click()
-        self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).clear()
-        (self.browser.find_element(*MainPageLocators.FULL_NAME_EN_INPUT).send_keys
-         (CreateChildProjectData.full_name_en))
-        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).click()
-        self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).clear()
-        (self.browser.find_element(*MainPageLocators.SHORT_NAME_RU_INPUT).send_keys
-         (CreateChildProjectData.short_name_ru))
-        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).click()
-        self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).clear()
-        (self.browser.find_element(*MainPageLocators.SHORT_NAME_EN_INPUT).send_keys
-         (CreateChildProjectData.short_name_en))
-        time.sleep(2)
-        self.browser.find_element(*MainPageLocators.PROJECT_CREATE_BUTTON).click()
-        time.sleep(3)
-        edited_back_project = self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT)
-        assert edited_back_project.is_displayed(), 'Project is not edited'
-
     def appoint_build_on_project_by_superadmin(self):
-        last_height = self.browser.execute_script("return document.body.scrollHeight")
-        while True:
-            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)
-            new_height = self.browser.execute_script("return document.body.scrollHeight")
-            if new_height == last_height:
-                break
-            last_height = new_height
-
-        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
-        self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
         modal_element = self.browser.find_element(*MainPageLocators.PROJECT_ADD_MODAL)
         self.browser.execute_script("window.scrollBy(0, 800);", modal_element)
@@ -248,17 +184,6 @@ class MainPage(BasePage):
         assert build_user_active.is_displayed(), 'build is not appointed'
 
     def remove_build_from_project_by_superadmin(self):
-        last_height = self.browser.execute_script("return document.body.scrollHeight")
-        while True:
-            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)
-            new_height = self.browser.execute_script("return document.body.scrollHeight")
-            if new_height == last_height:
-                break
-            last_height = new_height
-
-        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
-        self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
         modal_element = self.browser.find_element(*MainPageLocators.PROJECT_ADD_MODAL)
         self.browser.execute_script("window.scrollBy(0, 700);", modal_element)

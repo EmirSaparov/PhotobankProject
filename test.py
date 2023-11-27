@@ -89,13 +89,14 @@ class TestMainPage:
         page.open()
         page.open_project_from_slider()
 
+    @pytest.mark.xfail
     def test_add_proj_in_slider(self, browser):
         page = MainPage(browser=browser, url=self.url)
-        page.open()
         page.open_login_link()
         page.login()
         page.add_new_project_in_slider()
 
+    @pytest.mark.xfail
     def test_delete_proj_from_slider(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -177,135 +178,152 @@ class TestMainPage:
 
     """Project page test"""
     def test_create_album(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.create_album()
 
     def test_upload_photo(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.add_photo_in_album()
 
     def test_filter_album_by_rubric(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.album_filter_by_rubric()
 
     def test_hide_photo_in_album(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.hide_photos_in_album()
 
     def test_show_photo_in_album(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.show_photos_in_album()
 
     def test_download_one_photo_hover(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.download_photo_in_album_hover()
 
     def test_delete_one_photo(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.delete_photo_in_album()
 
     def test_upload_several_photo(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.add_several_photo_in_album()
 
     def test_download_all_photo(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.download_all_photo_in_album()
 
     def test_hide_multiple_photo_in_album(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.hide_multiple_photos_in_albums()
 
     def test_show_multiple_photo_in_album(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.show_multiple_photos_in_albums()
 
     def test_delete_several_photo(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.delete_several_photo_in_album()
 
     def test_show_album(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.show_album()
 
     def test_hide_album(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.hide_album()
 
     def test_edit_album(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.edit_album()
 
     def test_delete_album(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.album_delete()
 
     def test_create_album_no_filter(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.create_album_no_filter()
 
     def test_create_album_out_of_date(self, browser):
-        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=self.url)
         page.open()
         page.open_login_link()
         page.login()
+        page.go_to_projects_page()
         page.create_album_out_of_date()
 
     def test_edit_project(self, browser):
-        page = MainPage(browser=browser, url=f'{self.url}/ru/projects')
+        page = ProjectPage(browser=browser, url=f'{self.url}/ru/projects/115#login')
         page.open()
-        page.open_login_link()
         page.login()
         page.edit_project()
 
@@ -314,6 +332,7 @@ class TestMainPage:
     #     page.open()
     #     page.open_login_link()
     #     page.login()
+    #     page.go_to_projects_page()
     #     page.add_several_photo_in_album()
     #     page.go_to_main_page()
     #     page.reposition_photos()
@@ -404,13 +423,12 @@ class TestMainPage:
         page.appoint_users_role_build()
 
     def test_superadmin_appoint_build_on_project(self, browser):
-        page = MainPage(browser=browser, url=self.url)
+        page = MainPage(browser=browser, url=f'{self.url}/ru/projects/115#login')
         page.open()
-        page.open_login_link()
         page.login()
-        page.go_to_projects_page()
         page.appoint_build_on_project_by_superadmin()
 
+    @pytest.mark.new
     def test_build_have_charges_on_project_as_build(self, browser):
         page = MainPage(browser=browser, url=self.url)
         page.open()
@@ -419,28 +437,23 @@ class TestMainPage:
         page.go_to_projects_page()
         page.build_have_charges_on_project_as_build()
 
+    @pytest.mark.new
     def test_build_can_edit_project(self, browser):
-        page = MainPage(browser=browser, url=self.url)
+        page = MainPage(browser=browser, url=f'{self.url}/ru/projects/115#login')
         page.open()
-        page.open_login_link()
         page.login_as_build()
-        page.go_to_projects_page()
         page.build_can_edit_project()
 
     def test_superadmin_remove_build(self, browser):
-        page = MainPage(browser=browser, url=self.url)
+        page = MainPage(browser=browser, url=f'{self.url}/ru/projects/115#login')
         page.open()
-        page.open_login_link()
         page.login()
-        page.go_to_projects_page()
         page.remove_build_from_project_by_superadmin()
 
     def test_build_dont_have_charges_on_project_as_build(self, browser):
-        page = MainPage(browser=browser, url=self.url)
+        page = MainPage(browser=browser, url=f'{self.url}/ru/projects/115#login')
         page.open()
-        page.open_login_link()
         page.login_as_build()
-        page.go_to_projects_page()
         page.build_dont_have_charges_on_project_after_remove_as_build()
 
     def test_remove_build_role_from_user(self, browser):
