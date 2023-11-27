@@ -178,7 +178,6 @@ class MainPage(BasePage):
         self.browser.find_element(*MainPageLocators.BUILD_MULTISELECT_CHOOSE).click()
         self.browser.find_element(*MainPageLocators.CLOSE_MULTISELECTOR_BUTTON).click()
         self.browser.find_element(*MainPageLocators.PROJECT_CREATE_BUTTON).click()
-        self.browser.refresh()
         self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
         build_user_active = self.browser.find_element(*MainPageLocators.BUILD_MULTISELECT_ACTIVE)
         assert build_user_active.is_displayed(), 'build is not appointed'
@@ -193,37 +192,16 @@ class MainPage(BasePage):
         close_build_multiselector.click()
         # self.browser.find_element(*MainPageLocators.CLOSE_MULTISELECTOR_BUTTON).click()
         self.browser.find_element(*MainPageLocators.PROJECT_CREATE_BUTTON).click()
-        self.browser.refresh()
         self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
         build_user_active = self.browser.find_element(*MainPageLocators.BUILD_MULTISELECT)
         assert build_user_active.is_displayed(), 'build is not removed'
 
     def build_have_charges_on_project_as_build(self):
-        last_height = self.browser.execute_script("return document.body.scrollHeight")
-        while True:
-            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)
-            new_height = self.browser.execute_script("return document.body.scrollHeight")
-            if new_height == last_height:
-                break
-            last_height = new_height
-
-        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         edit_button = self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON)
         assert edit_button.is_displayed(), 'Build cant edit project attached to him'
 
     def build_dont_have_charges_on_project_after_remove_as_build(self):
-        last_height = self.browser.execute_script("return document.body.scrollHeight")
-        while True:
-            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)
-            new_height = self.browser.execute_script("return document.body.scrollHeight")
-            if new_height == last_height:
-                break
-            last_height = new_height
-
-        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         try:
             edit_button = self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON)
@@ -232,16 +210,6 @@ class MainPage(BasePage):
             assert True, 'Build can still edit project after removal'
 
     def build_can_edit_project(self):
-        last_height = self.browser.execute_script("return document.body.scrollHeight")
-        while True:
-            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)
-            new_height = self.browser.execute_script("return document.body.scrollHeight")
-            if new_height == last_height:
-                break
-            last_height = new_height
-
-        self.browser.find_element(*MainPageLocators.SPECIFIC_PROJECT).click()
         self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
         self.browser.find_element(*MainPageLocators.PROJECT_EDIT_BUTTON).click()
         time.sleep(2)

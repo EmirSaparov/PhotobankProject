@@ -428,18 +428,14 @@ class TestMainPage:
         page.login()
         page.appoint_build_on_project_by_superadmin()
 
-    @pytest.mark.new
     def test_build_have_charges_on_project_as_build(self, browser):
-        page = MainPage(browser=browser, url=self.url)
+        page = MainPage(browser=browser, url=f'{self.url}/ru/projects/100#login')
         page.open()
-        page.open_login_link()
         page.login_as_build()
-        page.go_to_projects_page()
         page.build_have_charges_on_project_as_build()
 
-    @pytest.mark.new
     def test_build_can_edit_project(self, browser):
-        page = MainPage(browser=browser, url=f'{self.url}/ru/projects/115#login')
+        page = MainPage(browser=browser, url=f'{self.url}/ru/projects/100#login')
         page.open()
         page.login_as_build()
         page.build_can_edit_project()
@@ -451,7 +447,7 @@ class TestMainPage:
         page.remove_build_from_project_by_superadmin()
 
     def test_build_dont_have_charges_on_project_as_build(self, browser):
-        page = MainPage(browser=browser, url=f'{self.url}/ru/projects/115#login')
+        page = MainPage(browser=browser, url=f'{self.url}/ru/projects/100#login')
         page.open()
         page.login_as_build()
         page.build_dont_have_charges_on_project_after_remove_as_build()

@@ -28,10 +28,10 @@ class ProjectPage(BasePage):
             self.browser.find_element(*ProjectPageLocators.ADD_ALBUM_BUTTON_ALBUMS_EXIST).click()
         except NoSuchElementException:
             self.browser.find_element(*ProjectPageLocators.ADD_ALBUM_BUTTON_NO_ALBUMS).click()
-        time.sleep(2)
+        time.sleep(1)
         self.browser.find_element(*ProjectPageLocators.ALBUM_OUT_OF_DATE_CHECKBOX).click()
         self.browser.find_element(*ProjectPageLocators.ALBUM_DATE_TIME_PICKER).click()
-        time.sleep(2)
+        time.sleep(1)
         self.browser.find_element(*ProjectPageLocators.DATE_SELECT).click()
         self.browser.find_element(*ProjectPageLocators.ALBUM_SELECT_BUTTON).click()
         self.browser.find_element(*ProjectPageLocators.RUBRICS_MULTISELECT).click()
@@ -488,10 +488,10 @@ class ProjectPage(BasePage):
         # self.browser.find_element(*MainPageLocators.SPECIFIC_SUBPROJECT).click()
 
         edit_button = (WebDriverWait(self.browser, 10).until
-                       (EC.presence_of_element_located(MainPageLocators.PROJECT_EDIT_BUTTON)))
+                       (EC.element_to_be_clickable(MainPageLocators.PROJECT_EDIT_BUTTON)))
         edit_button.click()
         ru_input = WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located(MainPageLocators.FULL_NAME_RU_INPUT))
+            EC.element_to_be_clickable(MainPageLocators.FULL_NAME_RU_INPUT))
         ru_input.click()
         ru_input.clear()
         ru_input.send_keys(EditProjectData.full_name_ru_edit)
