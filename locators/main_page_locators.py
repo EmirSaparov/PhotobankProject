@@ -55,4 +55,3 @@ class MainPageLocators:
     BUILD_MULTISELECT_CHOOSE = (By.XPATH, '//li[@aria-label="Сапаров Э. Р.(emir-saparo@rambler.ru)"]')
     BUILD_MULTISELECT_ACTIVE = (By.XPATH, '//div[@aria-label="Сапаров Э. Р.(emir-saparo@rambler.ru)"]')
     BUILD_MULTISELECT_CLEAR = (By.CLASS_NAME, 'multiselect-clear')
-

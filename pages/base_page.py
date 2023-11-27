@@ -2,6 +2,7 @@ import base64
 import re
 import time
 
+import pytest
 from selenium.common import NoSuchElementException
 
 from locators.base_page_locators import BasePageLocators
@@ -61,7 +62,8 @@ class BasePage:
         confirmation_password = self.browser.find_element(*BasePageLocators.CONFIRMATION_PASSWORD_INPUT)
         confirmation_password.send_keys(RegistrationData.password)
         self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON).click()
-        assert self.browser.find_element(*BasePageLocators.PROFILE_BUTTON), 'Registration is not complete'
+        profile_logo = self.browser.find_element(*BasePageLocators.PROFILE_BUTTON)
+        assert profile_logo.is_displayed(), 'Registration is not complete'
 
     def registration_if_already_have_account(self):
         self.browser.find_element(*BasePageLocators.REGISTRATION_LINK).click()
